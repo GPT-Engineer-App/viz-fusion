@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,13 +12,6 @@ const DataUpload = () => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const savedDatasets = JSON.parse(localStorage.getItem('datasets') || '[]');
-    if (savedDatasets.length > 0) {
-      navigate('/datasets');
-    }
-  }, [navigate]);
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];

@@ -1,11 +1,19 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 const DatasetModal = ({ isOpen, onClose, dataset, onSaveHeaders }) => {
-  const [headers, setHeaders] = useState(dataset.headers);
+  const [headers, setHeaders] = useState([]);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    if (dataset) {
+      setHeaders(dataset.headers || []);
+      setData(dataset.data || []);
+    }
+  }, [dataset]);
 
   const handleHeaderChange = (index, value) => {
     const newHeaders = [...headers];
@@ -19,9 +27,9 @@ const DatasetModal = ({ isOpen, onClose, dataset, onSaveHeaders }) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl">
+      <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>{dataset.name} - Preview</DialogTitle>
+          <DialogTitle>{dataset?.name} - Preview</DialogTitle>
         </DialogHeader>
         <div className="overflow-x-auto">
           <Table>
@@ -39,7 +47,7 @@ const DatasetModal = ({ isOpen, onClose, dataset, onSaveHeaders }) => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {dataset.data.slice(1, 1000).map((row, rowIndex) => (
+              {data.slice(0, 1000).map((row, rowIndex) => (
                 <TableRow key={rowIndex}>
                   {headers.map((header, cellIndex) => (
                     <TableCell key={cellIndex}>{row[header]}</TableCell>
