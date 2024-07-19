@@ -1,55 +1,48 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
 
 const Dashboard = () => {
-  return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold mb-6">Data Visualization Dashboard</h1>
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+  // This state would be managed by your app's global state management solution
+  const hasUploadedData = false;
+  const selectedTemplate = null;
+
+  if (!hasUploadedData || !selectedTemplate) {
+    return (
+      <div className="p-6">
+        <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
         <Card>
           <CardHeader>
-            <CardTitle>Templates</CardTitle>
-            <CardDescription>Choose from various visualization templates</CardDescription>
+            <CardTitle>Welcome to Your Dashboard</CardTitle>
+            <CardDescription>Upload data and select a template to get started</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="h-40 bg-gray-200 rounded flex items-center justify-center mb-4">
-              Templates Preview
-            </div>
-            <Button asChild className="w-full">
-              <Link to="/templates">Explore Templates</Link>
-            </Button>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Builder</CardTitle>
-            <CardDescription>Create custom visualizations</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="h-40 bg-gray-200 rounded flex items-center justify-center mb-4">
-              Builder Preview
-            </div>
-            <Button asChild className="w-full">
-              <Link to="/builder">Go to Builder</Link>
-            </Button>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Data Upload</CardTitle>
-            <CardDescription>Upload and visualize your data</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="h-40 bg-gray-200 rounded flex items-center justify-center mb-4">
-              Data Upload
-            </div>
-            <Button asChild className="w-full">
-              <Link to="/data-upload">Upload Data</Link>
-            </Button>
+            <p>To visualize your data:</p>
+            <ol className="list-decimal list-inside mt-2">
+              <li>Go to the Data Upload page and upload your dataset</li>
+              <li>Visit the Templates page and choose a visualization template</li>
+              <li>Return to this Dashboard to see your visualized data</li>
+            </ol>
           </CardContent>
         </Card>
       </div>
+    );
+  }
+
+  // This part would be populated with the actual visualization component
+  // based on the selected template and uploaded data
+  return (
+    <div className="p-6">
+      <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
+      <Card>
+        <CardHeader>
+          <CardTitle>{selectedTemplate} Visualization</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {/* Placeholder for the actual visualization component */}
+          <div className="h-96 bg-gray-200 rounded flex items-center justify-center">
+            Visualization will be displayed here
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
