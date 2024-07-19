@@ -1,8 +1,9 @@
-import { LayoutTemplate, Wrench, Upload, BarChart } from "lucide-react";
+import { LayoutTemplate, Wrench, Upload, BarChart, Database } from "lucide-react";
 import Dashboard from "./pages/Dashboard";
 import Templates from "./pages/Templates";
 import Builder from "./pages/Builder";
 import DataUpload from "./pages/DataUpload";
+import Datasets from "./pages/Datasets";
 
 export const navItems = [
   {
@@ -28,5 +29,11 @@ export const navItems = [
     to: "/data-upload",
     icon: <Upload className="h-4 w-4" />,
     page: <DataUpload />,
+  },
+  {
+    title: "Datasets",
+    to: "/datasets",
+    icon: <Database className="h-4 w-4" />,
+    page: <Datasets />,
   },
 ];

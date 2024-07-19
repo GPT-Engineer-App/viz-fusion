@@ -1,14 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
+import Papa from 'papaparse';
 
 const DataUpload = () => {
   const [file, setFile] = useState(null);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const savedDatasets = JSON.parse(localStorage.getItem('datasets') || '[]');
+    if (savedDatasets.length > 0) {
+      navigate('/datasets');
+    }
+  }, [navigate]);
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
@@ -25,11 +35,30 @@ const DataUpload = () => {
 
   const handleUpload = () => {
     if (file) {
-      // Here you would typically send the file to a server
-      console.log("Uploading file:", file.name);
-      setSuccess(true);
-      // Reset after 3 seconds
-      setTimeout(() => setSuccess(false), 3000);
+      Papa.parse(file, {
+        complete: (results) => {
+          const dataset = {
+            name: file.name,
+            data: results.data.slice(0, 1000), // Store only top 1000 rows
+            headers: results.data[0],
+            uploadDate: new Date().toISOString()
+          };
+
+          const savedDatasets = JSON.parse(localStorage.getItem('datasets') || '[]');
+          savedDatasets.push(dataset);
+          localStorage.setItem('datasets', JSON.stringify(savedDatasets));
+
+          setSuccess(true);
+          setTimeout(() => {
+            setSuccess(false);
+            navigate('/datasets');
+          }, 2000);
+        },
+        header: true,
+        error: (error) => {
+          setError(`Error parsing file: ${error.message}`);
+        }
+      });
     } else {
       setError("Please select a file to upload.");
     }
@@ -62,7 +91,7 @@ const DataUpload = () => {
           <Alert className="mt-4">
             <AlertCircle className="h-4 w-4" />
             <AlertTitle>Success</AlertTitle>
-            <AlertDescription>File uploaded successfully!</AlertDescription>
+            <AlertDescription>File uploaded successfully! Redirecting to datasets...</AlertDescription>
           </Alert>
         )}
       </div>
