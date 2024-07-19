@@ -1,7 +1,7 @@
-import { BarChart, PieChart, Upload } from "lucide-react";
+import { LayoutTemplate, Wrench, Upload, BarChart } from "lucide-react";
 import Dashboard from "./pages/Dashboard";
-import BarChartPage from "./pages/BarChart";
-import PieChartPage from "./pages/PieChart";
+import Templates from "./pages/Templates";
+import Builder from "./pages/Builder";
 import DataUpload from "./pages/DataUpload";
 
 export const navItems = [
@@ -12,16 +12,16 @@ export const navItems = [
     page: <Dashboard />,
   },
   {
-    title: "Bar Chart",
-    to: "/bar-chart",
-    icon: <BarChart className="h-4 w-4" />,
-    page: <BarChartPage />,
+    title: "Templates",
+    to: "/templates",
+    icon: <LayoutTemplate className="h-4 w-4" />,
+    page: <Templates />,
   },
   {
-    title: "Pie Chart",
-    to: "/pie-chart",
-    icon: <PieChart className="h-4 w-4" />,
-    page: <PieChartPage />,
+    title: "Builder",
+    to: "/builder",
+    icon: <Wrench className="h-4 w-4" />,
+    page: <Builder />,
   },
   {
     title: "Data Upload",
